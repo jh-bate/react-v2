@@ -5,7 +5,9 @@ var GroupItem = React.createClass({
     render: function() {
         return this.transferPropsTo(
             <a href="#" className="list-group-item">
-                <h4 className="list-group-item-heading">{this.props.name}</h4>
+            	<span ref='noteWhen' className="badge">{this.props.when}</span>
+                <h4 ref='groupName' className="list-group-item-heading">{this.props.name}</h4>
+                <p ref='noteSummary' className="list-group-item-text">{this.props.latestNoteSummary}</p>
             </a>
         );
     }
