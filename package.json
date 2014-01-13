@@ -20,7 +20,7 @@
     "mocha": "1.16.2"
   },
   "scripts": {
-    "start": "webpack --watch --debug src/main.js build/main.js"
+    "start": "webpack --watch --debug src/main.js build/clamshell.js"
   },
   "author": ""
 }
