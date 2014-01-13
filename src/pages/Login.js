@@ -11,7 +11,7 @@ var Login = React.createClass({
             <form className="form-horizontal" role="form">
             	<div className="form-group">
     				<div className="col-sm-offset-2 col-sm-10">
-      					<a type="submit" className="btn btn-default" ref='login-btn' onClick={this.props.onLogin}>Sign in</a>
+      					<a type="submit" className="btn btn-default" ref='loginBtn' onClick={this.props.onLogin}>Sign in</a>
     				</div>
   				</div>
             </form>
