@@ -4,8 +4,10 @@ var React = require('react');
 
 var Login = require('../../build/pages/Login');
 
+var loggedIn = false;
+
 var handleLoginSuccess  = function(){
-    return true;
+    loggedIn = true;
 };
 
 
@@ -42,6 +44,12 @@ describe('Login', function() {
     it('should take a users password', function() {
         var pw = component.refs.pwFeild;
         expect(pw).to.exist;
+    });
+
+    it('should fire onLogin handler when submit clicked', function() {
+        expect(loggedIn).to.be.false;
+        component.props.onLogin();
+        expect(loggedIn).to.be.true;
     });
 
 });

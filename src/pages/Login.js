@@ -4,7 +4,6 @@ var React = require('react');
 
 var Login = React.createClass({
 
-
 	getSignInForm: function(){
 		return (
 			/* jshint ignore:start */
