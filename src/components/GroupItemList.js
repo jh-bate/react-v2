@@ -1,19 +1,32 @@
 /** @jsx React.DOM */
 var React = require('react');
+var _ = require('underscore');
 
 var GroupItem = require('./GroupItem');
 
 var GroupItemList = React.createClass({
 
-	summaryForMessage: function(message){
+	summaryForMessage: function(messageText){
+		//return the first 10 words or less
+        var summary = messageText;
 
+        if(messageText && messageText.split(' ').length > 10){
+            //do we have more than ten words?
+            summary = messageText.split(' ').slice(0,10).join(' ');
+            summary += ' ...';
+        }
+        return summary;
 	},
 
 	mostRecentMessage: function(messages){
 		if(messages){
-			return messages[0];
+			var latest =  _.sortBy(messages, function (message) {
+				return message.timestamp;
+			}).reverse();
+
+			return latest[0];
 		}
-		return {};
+		return;
 	},
 
 	niceTime: function(time){
