@@ -44,8 +44,12 @@ var ClamShellApp = React.createClass({
 
     componentDidMount: function () {
 
+        console.log('setup ...');
+
         if (this.state.authenticated) {
+            console.log('authenticated ...');
             this.fetchUser();
+            this.setState({routeName:'groups'});
         }
         this.setupAndStartRouter();
     },
@@ -79,7 +83,13 @@ var ClamShellApp = React.createClass({
         }
         return null;
     },
-    
+
+    handleLoginSuccess:function(){
+        this.setState({authenticated: true});
+        this.fetchUser();
+        this.setState({routeName:'groups'});
+    },
+
     renderContent:function(){
         var routeName = this.state.routeName;
 
@@ -93,7 +103,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:end */
         }else{
             /* jshint ignore:start */
-            return  <Login />;
+            return  <Login onLoginSuccess={this.handleLoginSuccess} />;
             /* jshint ignore:end */
         }
     },
@@ -130,12 +140,13 @@ app.init = function(callback) {
     var self = this;
 
     function initApi() {
-        //self.api.init();
+        self.api.init();
         initAuth();
     }
 
     function initAuth() {
-        //self.auth.init(callback);
+        console.log('authenticating ...');
+        self.auth.init(callback);
         callback();
     }
 

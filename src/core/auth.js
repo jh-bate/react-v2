@@ -10,6 +10,7 @@ var auth = {
     log: bows('Auth'),
 
     init: function(callback) {
+      console.log('init auth');  
       if (config.DEMO) {
         addDemoOverrides(this);
         return this.demoInit(callback);
