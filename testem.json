@@ -1,0 +1,17 @@
+{
+    "framework": "mocha",
+    "serve_files": [ "build/browserified.js" ],
+    "src_files": [
+      "build/**/*.js",
+      "test/**/*.js"
+    ],
+    "launchers": {
+        "Node": {
+            "command": "mocha test/**/*.js -R tap",
+            "protocol": "tap"
+        }
+    },
+    "before_tests" : "browserify test/**/*.js -o build/browserified.js",
+    "on_exit": "rm build/browserified.js",
+    "launch_in_dev": [ "chrome" ]
+  }
