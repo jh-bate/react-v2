@@ -14,7 +14,7 @@ describe('Login', function() {
 
     beforeEach(function() {
         //we add our component to test into a div and then render it
-        component = Login(
+        component = Login({
             onLogin : handleLoginSuccess
         });
 
