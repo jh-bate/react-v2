@@ -25,8 +25,6 @@ function addDemoOverrides(api) {
   // ----- User -----
 
   api.user.get = function(callback) {
-    var uri = '/user.json';
-    api.log('[demo] GET ' + uri);
     console.log('[demo] user ' + demoUsers[0]);
     callback(null, demoUsers[0]);
   };

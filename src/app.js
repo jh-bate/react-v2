@@ -79,6 +79,7 @@ var ClamShellApp = React.createClass({
         }
         return null;
     },
+    
     renderContent:function(){
         var routeName = this.state.routeName;
 
