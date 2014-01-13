@@ -9,8 +9,20 @@ var Login = React.createClass({
 		return (
 			/* jshint ignore:start */
             <form className="form-horizontal" role="form">
+                <div className="form-group">
+                    <label for="inputEmail3" className="col-sm-2 control-label">Email</label>
+                    <div className="col-sm-3">
+                        <input type="email" ref='emailFeild' id='inputEmail3' className="form-control" placeholder="Email" />
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label for="inputPassword3" className="col-sm-2 control-label">Password</label>
+                    <div className="col-sm-3">
+                        <input type="password" ref='pwFeild' className="form-control" id="inputPassword3" placeholder="Password" />
+                    </div>
+                </div>
             	<div className="form-group">
-    				<div className="col-sm-offset-2 col-sm-10">
+    				<div className="col-sm-offset-2 col-sm-3">
       					<a type="submit" className="btn btn-default" ref='loginBtn' onClick={this.props.onLogin}>Sign in</a>
     				</div>
   				</div>
@@ -25,7 +37,6 @@ var Login = React.createClass({
 
         return (
         	<div className='content'>
-        		<h1>Will be the login page</h1>
         		{login}
         	</div>);
     }

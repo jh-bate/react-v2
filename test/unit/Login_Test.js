@@ -34,4 +34,14 @@ describe('Login', function() {
         expect(loginBtn).to.exist;
     });
 
+    it('should take a users email', function() {
+        var email = component.refs.emailFeild;
+        expect(email).to.exist;
+    });
+
+    it('should take a users password', function() {
+        var pw = component.refs.pwFeild;
+        expect(pw).to.exist;
+    });
+
 });
