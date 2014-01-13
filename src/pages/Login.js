@@ -29,7 +29,7 @@ var Login = React.createClass({
                 </div>
             	<div className="form-group">
     				<div className="col-sm-offset-2 col-sm-3">
-      					<a type="submit" className="btn btn-default" ref='loginBtn' onClick={this.props.onLogin}>Sign in</a>
+      					<a type="submit" className="btn btn-default" ref='loginBtn' onClick={this.handleLogin}>Sign in</a>
     				</div>
   				</div>
             </form>
@@ -47,7 +47,7 @@ var Login = React.createClass({
         	</div>);
     },
 
-    handleLogin: function(username, password) {
+    handleLogin: function() {
         var self = this;
 
         if (this.state.loggingIn) {
@@ -55,6 +55,9 @@ var Login = React.createClass({
         }
 
         this.setState({loggingIn: true});
+
+        var username = this.props.emailFeild.getDOMNode().value;
+        var password = this.props.pwFeild.getDOMNode().value;
 
         var validationError = this.validate(username, password);
         if (validationError) {

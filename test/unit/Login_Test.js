@@ -10,13 +10,18 @@ var handleLoginSuccess  = function(){
     loggedIn = true;
 };
 
+var loginFake  = function(username,password,cb){
+    cb(username,password);
+};
+
 describe('Login', function() {
     var component, container;
 
     beforeEach(function() {
         //we add our component to test into a div and then render it
         component = Login({
-            onLogin : handleLoginSuccess
+            login : loginFake,
+            onLoginSuccess : handleLoginSuccess
         });
 
         container = document.createElement('div');
@@ -45,10 +50,21 @@ describe('Login', function() {
         expect(pw).to.exist;
     });
 
-    it('should fire onLogin handler when submit clicked', function() {
+    it('should fire onLoginSuccess handler when called', function() {
         expect(loggedIn).to.be.false;
-        component.props.onLogin();
+        component.props.onLoginSuccess();
         expect(loggedIn).to.be.true;
+    });
+
+    it('should use login handler when submit clicked', function() {
+        
+        var fakeUn = 'fake.user@go.org';
+        var fakePw = 'f@k31t';
+
+        component.props.login(fakeUn,fakePw,function(givenUser,givenPw){
+            expect(givenPw).to.equal(fakePw);
+            expect(givenUser).to.equal(fakeUn);
+        });
     });
 
     it('should fail validation and return a message with no email', function() {
