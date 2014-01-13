@@ -43,6 +43,14 @@ var ClamShellApp = React.createClass({
     },
 
     componentDidMount: function () {
+
+        if (this.state.authenticated) {
+            this.fetchUser();
+        }
+        this.setupAndStartRouter();
+    },
+
+    setupAndStartRouter:function(){
         var router = Router({
             '/': this.setState.bind(this, {routeName: 'login'}),
             '/groups': this.setState.bind(this, {routeName: 'groups'}),
@@ -87,6 +95,14 @@ var ClamShellApp = React.createClass({
             return  <Login />;
             /* jshint ignore:end */
         }
+    },
+
+    fetchUser: function() {
+        var self = this;
+        console.log('getting user');
+        app.api.user.get(function(err, user) {
+            self.setState({user: user});
+        });
     }
 });
 
