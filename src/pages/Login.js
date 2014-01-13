@@ -38,6 +38,20 @@ var Login = React.createClass({
         	<div className='content'>
         		{login}
         	</div>);
+    },
+
+    validate: function(username, password) {
+        if (!username && !password) {
+            return 'Missing email and password.';
+        }
+
+        if (!username) {
+            return 'Missing email.';
+        }
+
+        if (!password) {
+            return 'Missing password.';
+        }
     }
 });
 

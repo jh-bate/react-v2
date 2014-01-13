@@ -10,7 +10,6 @@ var handleLoginSuccess  = function(){
     loggedIn = true;
 };
 
-
 describe('Login', function() {
     var component, container;
 
@@ -50,6 +49,26 @@ describe('Login', function() {
         expect(loggedIn).to.be.false;
         component.props.onLogin();
         expect(loggedIn).to.be.true;
+    });
+
+    it('should fail validation and return a message with no email', function() {
+        var err = component.validate('','pa55w0rd');
+        expect(err).to.equal('Missing email.');
+    });
+
+    it('should fail validation and return a message with no pw', function() {
+        var err = component.validate('test.user@test.com','');
+        expect(err).to.equal('Missing password.');
+    });
+
+    it('should fail validation and return a message with no pw and email', function() {
+        var err = component.validate('','');
+        expect(err).to.equal('Missing email and password.');
+    });
+
+    it('should pass validation when given details', function() {
+        var err = component.validate('test.user@test.com','pa55w0rd');
+        expect(err).to.be.empty;
     });
 
 });
