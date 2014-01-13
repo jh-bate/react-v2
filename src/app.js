@@ -104,7 +104,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:end */
         }else{
             /* jshint ignore:start */
-            return  <Login onLogin={this.handleLoginSuccess} />;
+            return  <Login onLoginSuccess={this.handleLoginSuccess} login={app.auth.login.bind(app.auth)}/>;
             /* jshint ignore:end */
         }
     },

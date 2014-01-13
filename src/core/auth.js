@@ -71,8 +71,8 @@ function addDemoOverrides(auth) {
         },
 
         login: function(username, password, callback) {
-            self.saveSession(self.demoToken);
-            self.log('[demo] Login success');
+            this.saveSession(self.demoToken);
+            this.log('[demo] Login success');
             callback();
         },
 

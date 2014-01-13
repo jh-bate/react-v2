@@ -11,7 +11,7 @@ var Login = React.createClass({
         };
     },
 
-	getSignInForm: function(){
+	renderSignInForm: function(){
 		return (
 			/* jshint ignore:start */
             <form className="form-horizontal" role="form">
@@ -36,14 +36,27 @@ var Login = React.createClass({
             /* jshint ignore:end */
 		);
 	},
+    renderMessage: function() {
+        var message = this.state.message;
+        if (message) {
+            return (
+                /* jshint ignore:start */
+                <div className="col-sm-offset-2 col-sm-3 login-message js-login-message">{message}</div>
+                /* jshint ignore:end */
+            );
+        }
+        return null;
+    },
 
     render: function() {
 
-    	var login = this.getSignInForm();
+    	var login = this.renderSignInForm();
+        var message = this.renderMessage();
 
         return (
         	<div className='content'>
         		{login}
+                {message}
         	</div>);
     },
 
@@ -56,8 +69,8 @@ var Login = React.createClass({
 
         this.setState({loggingIn: true});
 
-        var username = this.props.emailFeild.getDOMNode().value;
-        var password = this.props.pwFeild.getDOMNode().value;
+        var username = this.refs.emailFeild.getDOMNode().value;
+        var password = this.refs.pwFeild.getDOMNode().value;
 
         var validationError = this.validate(username, password);
         if (validationError) {
