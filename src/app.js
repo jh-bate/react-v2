@@ -36,7 +36,9 @@ var ClamShellApp = React.createClass({
         return {
             messages: messages,
             routeName: 'login',
-            authenticated: true
+            authenticated: app.auth.isAuthenticated(),
+            user: null,
+            loggingOut: false
         };
     },
 
