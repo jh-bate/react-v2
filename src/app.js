@@ -85,6 +85,7 @@ var ClamShellApp = React.createClass({
     },
 
     handleLoginSuccess:function(){
+        console.log('successful login');
         this.setState({authenticated: true});
         this.fetchUser();
         this.setState({routeName:'groups'});
@@ -103,7 +104,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:end */
         }else{
             /* jshint ignore:start */
-            return  <Login onLoginSuccess={this.handleLoginSuccess} />;
+            return  <Login onLogin={this.handleLoginSuccess} />;
             /* jshint ignore:end */
         }
     },
