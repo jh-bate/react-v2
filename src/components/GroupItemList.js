@@ -30,7 +30,7 @@ var GroupItemList = React.createClass({
 	},
 
 	niceTime: function(time){
-
+		return time;
 	},
 
 	renderItems: function(){

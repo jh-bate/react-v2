@@ -5,10 +5,12 @@ var React = require('react');
 var GroupItemList = require('../../build/components/GroupItemList');
 var groups = require('../../demo/data').groups;
 
+var handlerCalled = false;
+
 var handleGroupSelected = function(props, key){
     console.log('props: ',props);
     console.log('key: ',key);
-    return true;
+    handlerCalled = true;
 };
 
 describe('GroupItemList', function() {
@@ -56,6 +58,18 @@ describe('GroupItemList', function() {
 
     it('should have method to get a nice time for display from the timestamp', function() {
         expect(component.niceTime).to.exist;
+    });
+
+    it('should have return the date to be displayed', function() {
+        var dateString = '2013-12-24T23:07:40+00:00';
+        var dateToDisplay = component.niceTime(dateString); 
+        expect(dateToDisplay).to.equal(dateString);
+    });
+
+    it('should call handler for group selection when a child group items is clicked', function() {
+        //call the onClick of first groupitem that is a child of our component
+        component._renderedComponent.props.children[0].props.onClick();
+        expect(handlerCalled).to.be.true;
     });
 
 });
