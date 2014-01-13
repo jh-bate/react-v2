@@ -71,4 +71,14 @@ describe('Login', function() {
         expect(err).to.be.empty;
     });
 
+    it('should have a loggingIn state', function() {
+        var loggingInState = component.state.loggingIn;
+        expect(loggingInState).to.exist;
+    });
+
+    it('should have a message in state', function() {
+        var messageState = component.state.message;
+        expect(messageState).to.exist;
+    });
+
 });

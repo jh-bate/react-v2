@@ -4,6 +4,13 @@ var React = require('react');
 
 var Login = React.createClass({
 
+    getInitialState: function() {
+        return {
+            loggingIn: false,
+            message: ''
+        };
+    },
+
 	getSignInForm: function(){
 		return (
 			/* jshint ignore:start */
@@ -38,6 +45,37 @@ var Login = React.createClass({
         	<div className='content'>
         		{login}
         	</div>);
+    },
+
+    handleLogin: function(username, password) {
+        var self = this;
+
+        if (this.state.loggingIn) {
+            return;
+        }
+
+        this.setState({loggingIn: true});
+
+        var validationError = this.validate(username, password);
+        if (validationError) {
+            this.setState({
+                loggingIn: false,
+                message: validationError
+            });
+            return;
+        }
+
+        this.props.login(username, password, function(err) {
+            if (err) {
+                self.setState({
+                    loggingIn: false,
+                    message: err.message || 'An error occured while logging in.'
+                });
+                return;
+            }
+            self.setState({loggingIn: false});
+            self.props.onLoginSuccess();
+        });
     },
 
     validate: function(username, password) {
