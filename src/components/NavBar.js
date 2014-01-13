@@ -10,28 +10,25 @@ var NavBar = React.createClass({
   
     getStandardNav : function(){
         return this.transferPropsTo(
-            <div className="navbar navbar-fixed-top">
-                <div className="navbar-inner">
-                    <div className="container">
-                        <ul className="nav">
-                            <li className={this.props.active === 'thread' && 'active'}><a href="#/thread">Notes</a></li>
-                        </ul>
-                    </div>
+            <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div className="navbar-header">
+                    <a className="navbar-brand" href="#">Blah</a>
                 </div>
-            </div>
+                <ul className="nav navbar-nav">
+                    <li className="active"><a href="#/group">Groups</a></li>
+                    <li><a href="#/thread">Notes</a></li>
+                </ul>
+            </nav>
         );
     },
 
     getDetailNav : function(){
         return this.transferPropsTo(
-            <div className="navbar navbar-fixed-top">
-                <div className="navbar-inner">
-                    <div className="container">
-                        <a className="brand" href="#/">Back</a>
-                        <h2 className='title'>{this.props.detailName}</h2>
-                    </div>
+            <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div className="navbar-header">
+                    <a className="navbar-brand" href="#/groups">Back</a>
                 </div>
-            </div>
+            </nav>
         );
     },
 
