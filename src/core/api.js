@@ -22,11 +22,17 @@ var api = {
 function addDemoOverrides(api) {
   var demoUsers = require('../../demo/data').users;
 
-  // ----- User -----
+  var groups = require('../../demo/data').groups;
 
+  // ----- User -----
   api.user.get = function(callback) {
-    console.log('[demo] user ' + demoUsers[0]);
+    
     callback(null, demoUsers[0]);
+  };
+  // ----- Groups -----
+  api.groups.get = function(userId,callback) {
+    
+    callback(null, groups);
   };
 
   return api;

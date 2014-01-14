@@ -38,6 +38,7 @@ var ClamShellApp = React.createClass({
             routeName: 'login',
             authenticated: app.auth.isAuthenticated(),
             user: null,
+            groups: null,
             loggingOut: false
         };
     },
@@ -48,7 +49,7 @@ var ClamShellApp = React.createClass({
 
         if (this.state.authenticated) {
             console.log('authenticated ...');
-            this.fetchUser();
+            this.fetchUserData();
             this.setState({routeName:'groups'});
         }
         this.setupAndStartRouter();
@@ -78,16 +79,21 @@ var ClamShellApp = React.createClass({
     renderNav:function(){
         if (this.state.authenticated) {
             /* jshint ignore:start */
-            return <NavBar className='Layout-topBar'/>;
+            return <NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>;
             /* jshint ignore:end */
         }
         return null;
     },
 
+    handleLogoutSuccess:function(){
+        console.log('successful logout');
+        this.setState({authenticated: true,groups:null,user:null,loggingOut:true,routeName:'groups'});
+    },
+
     handleLoginSuccess:function(){
         console.log('successful login');
         this.setState({authenticated: true});
-        this.fetchUser();
+        this.fetchUserData();
         this.setState({routeName:'groups'});
     },
 
@@ -96,7 +102,7 @@ var ClamShellApp = React.createClass({
 
         if (this.state.authenticated && routeName === 'groups') {
             /* jshint ignore:start */
-            return <Groups />;
+            return <Groups userGroups={this.state.groups}/>;
             /* jshint ignore:end */
         }else if(this.state.authenticated && routeName === 'thread'){
             /* jshint ignore:start */
@@ -109,13 +115,20 @@ var ClamShellApp = React.createClass({
         }
     },
 
-    fetchUser: function() {
+    fetchUserData: function() {
         var self = this;
         console.log('getting user');
         app.api.user.get(function(err, user) {
             self.setState({user: user});
+
+            app.api.groups.get(user,function(err, groups) {
+                console.log('getting user groups');
+                self.setState({groups: groups});
+            });
+
         });
     }
+
 });
 
 app.start = function() {
