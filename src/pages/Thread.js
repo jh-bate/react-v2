@@ -2,9 +2,11 @@
 
 var React = require('react');
 
+var MessageItemList = require('../components/MessageItemList');
+
 var Thread = React.createClass({
     render: function() {
-        return <div className='content'><h1>Will be the notes thread</h1></div>;
+    	return <MessageItemList messages={this.props.messages} />;
     }
 });
 

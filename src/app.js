@@ -32,9 +32,8 @@ require('./ClamShellApp.css');
 
 var ClamShellApp = React.createClass({
     getInitialState: function () {
-        var messages = [];
         return {
-            messages: messages,
+            messages: null,
             routeName: 'login',
             authenticated: app.auth.isAuthenticated(),
             user: null,
@@ -106,7 +105,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:end */
         }else if(this.state.authenticated && routeName === 'thread'){
             /* jshint ignore:start */
-            return <Thread messages={this.props.messages} />;
+            return <Thread messages={this.state.messages} />;
             /* jshint ignore:end */
         }else{
             /* jshint ignore:start */
@@ -122,8 +121,8 @@ var ClamShellApp = React.createClass({
             self.setState({user: user});
 
             app.api.groups.get(user,function(err, groups) {
-                console.log('getting user groups');
-                self.setState({groups: groups});
+                console.log('getting user groups and hacking messages');
+                self.setState({groups: groups, messages:groups[0].messages});
             });
 
         });
