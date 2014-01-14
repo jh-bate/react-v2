@@ -26,12 +26,10 @@ function addDemoOverrides(api) {
 
   // ----- User -----
   api.user.get = function(callback) {
-    
     callback(null, demoUsers[0]);
   };
   // ----- Groups -----
   api.groups.get = function(userId,callback) {
-    
     callback(null, groups);
   };
 
