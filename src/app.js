@@ -15,6 +15,8 @@ var bows = require('bows');
 var Layout = require('./layout/Layout');
 
 var NavBar = require('./components/NavBar');
+var ListNavBar = require('./components/ListNavBar');
+
 var Login = require('./components/Login');
 var GroupItemList = require('./components/GroupItemList');
 var MessageItemList = require('./components/MessageItemList');
@@ -76,9 +78,17 @@ var ClamShellApp = React.createClass({
         );
     },
 
-    handleLogoutSuccess:function(){
-        console.log('successful logout');
-        this.setState({authenticated: true,groups:null,user:null,loggingOut:true,routeName:'groups'});
+    handleLogout:function(){
+        console.log('logging out ...');
+        app.auth.logout(function(){
+            this.setState({authenticated: false,groups:null,messages:null, user:null,loggingOut:true,routeName:'login'});
+            console.log('successful logout');
+        }.bind(this));
+    },
+
+    handleBack:function(){
+        console.log('going back ...');
+        this.setState({routeName:'groups'});
     },
 
     handleLoginSuccess:function(){
@@ -90,7 +100,6 @@ var ClamShellApp = React.createClass({
 
     handleShowThread:function(groupId){
         console.log('selected: ',groupId);
-
         console.log('messages for selected: ',this.state.groups[groupId].messages);        
         this.setState({messages: this.state.groups[groupId].messages,routeName:'thread'});
     },
@@ -102,7 +111,8 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:start */
             return (
                 <Layout>
-                    <NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>
+                    //<NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>
+                    <ListNavBar title='Teams' actionName='Signout' onActionHandled={this.handleLogout}/>
                     <GroupItemList groups={this.state.groups} onGroupSelected={this.handleShowThread} />
                 </Layout>
             );
@@ -111,7 +121,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:start */
             return (
                 <Layout>
-                    <NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>
+                    <ListNavBar title='All Notes' actionName='Back' onActionHandled={this.handleBack}/>
                     <MessageItemList messages={this.state.messages} />
                 </Layout>
             );
