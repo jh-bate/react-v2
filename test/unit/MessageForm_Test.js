@@ -15,7 +15,7 @@ describe('MessageForm', function() {
 
     beforeEach(function() {
         //we add our component to test into a div and then render it
-        component = MessageForm({onMessageSubmit:getSubmittedMessage});
+        component = MessageForm({onMessageSend:getSubmittedMessage});
         container = document.createElement('div');
         document.documentElement.appendChild(container);
         React.renderComponent(component, container);
