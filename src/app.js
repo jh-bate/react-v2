@@ -17,10 +17,10 @@ var Layout = require('./layout/Layout');
 var NavBar = require('./components/NavBar');
 var ListNavBar = require('./components/ListNavBar');
 var FooterBar = require('./components/FooterBar');
-
 var Login = require('./components/Login');
 var GroupItemList = require('./components/GroupItemList');
 var MessageItemList = require('./components/MessageItemList');
+var MessageForm = require('./components/MessageForm');
 
 var auth = require('./core/auth');
 var api = require('./core/api');
@@ -59,7 +59,8 @@ var ClamShellApp = React.createClass({
         var router = Router({
             '/': this.setState.bind(this, {routeName: 'login'}),
             '/groups': this.setState.bind(this, {routeName: 'groups'}),
-            '/thread': this.setState.bind(this, {routeName: 'thread'})
+            '/thread': this.setState.bind(this, {routeName: 'thread'}),
+            '/new': this.setState.bind(this, {routeName: 'new'})
         });
         router.init();
     },
@@ -103,6 +104,11 @@ var ClamShellApp = React.createClass({
 
     handleAddingMessage:function(){
         console.log('would like to add a new message');
+        this.setState({routeName:'new'});
+    },
+
+    handleSend:function(e){
+        console.log('send ['+e.text+'] ['+e.group+']');
     },
 
     renderContent:function(){
@@ -128,7 +134,17 @@ var ClamShellApp = React.createClass({
                 </Layout>
             );
             /* jshint ignore:end */
-        }else{
+        }else if(this.state.authenticated && routeName === 'new'){
+            /* jshint ignore:start */
+            return (
+                <Layout>
+                    <ListNavBar title='New Message' actionName='Back' onActionHandled={this.handleBack}/>
+                    <MessageForm groups={this.state.groups} onMessageSend={this.handleSend}/>
+                </Layout>
+            );
+            /* jshint ignore:end */
+        }
+        else{
             /* jshint ignore:start */
             return (  
                 <Layout>
