@@ -6,7 +6,8 @@ var GroupItemList = require('../components/GroupItemList');
 
 var Groups = React.createClass({
 
-	handleGroupSelection : function(){
+	onShowThread : function(groupId){
+        this.props.handleShowThread(groupId);
 		console.log('group selected');
 	},
 
@@ -14,7 +15,7 @@ var Groups = React.createClass({
 
         return (
         	/* jshint ignore:start */
-        	<GroupItemList groups={this.props.userGroups} onGroupSelected={this.handleGroupSelection} />
+        	<GroupItemList groups={this.props.userGroups} onGroupSelected={this.onShowThread} />
         	/* jshint ignore:end */
         	);
     }

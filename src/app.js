@@ -12,10 +12,12 @@ var React = require('react');
 var Router = require('director').Router;
 var bows = require('bows');
 
+var Layout = require('./layout/Layout');
+
 var NavBar = require('./components/NavBar');
-var Login = require('./pages/Login');
-var Groups = require('./pages/Groups');
-var Thread = require('./pages/Thread');
+var Login = require('./components/Login');
+var GroupItemList = require('./components/GroupItemList');
+var MessageItemList = require('./components/MessageItemList');
 
 var auth = require('./core/auth');
 var api = require('./core/api');
@@ -64,24 +66,14 @@ var ClamShellApp = React.createClass({
     },
 
     render: function () {
-        var nav = this.renderNav();
+        
         var content = this.renderContent();
 
         return (
             <div className="app">
-                {nav}
                 {content}
             </div>
         );
-    },
-
-    renderNav:function(){
-        if (this.state.authenticated) {
-            /* jshint ignore:start */
-            return <NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>;
-            /* jshint ignore:end */
-        }
-        return null;
     },
 
     handleLogoutSuccess:function(){
@@ -96,20 +88,41 @@ var ClamShellApp = React.createClass({
         this.setState({routeName:'groups'});
     },
 
+    handleShowThread:function(groupId){
+        console.log('selected: ',groupId);
+
+        console.log('messages for selected: ',this.state.groups[groupId].messages);        
+        this.setState({messages: this.state.groups[groupId].messages,routeName:'thread'});
+    },
+
     renderContent:function(){
         var routeName = this.state.routeName;
 
         if (this.state.authenticated && routeName === 'groups') {
             /* jshint ignore:start */
-            return <Groups userGroups={this.state.groups}/>;
+            return (
+                <Layout>
+                    <NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>
+                    <GroupItemList groups={this.state.groups} onGroupSelected={this.handleShowThread} />
+                </Layout>
+            );
             /* jshint ignore:end */
         }else if(this.state.authenticated && routeName === 'thread'){
             /* jshint ignore:start */
-            return <Thread messages={this.state.messages} />;
+            return (
+                <Layout>
+                    <NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>
+                    <MessageItemList messages={this.state.messages} />
+                </Layout>
+            );
             /* jshint ignore:end */
         }else{
             /* jshint ignore:start */
-            return  <Login onLoginSuccess={this.handleLoginSuccess} login={app.auth.login.bind(app.auth)}/>;
+            return (  
+                <Layout>
+                    <Login onLoginSuccess={this.handleLoginSuccess} login={app.auth.login.bind(app.auth)}/>
+                </Layout>
+            );
             /* jshint ignore:end */
         }
     },

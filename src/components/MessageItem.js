@@ -5,9 +5,11 @@ var MessageItem = React.createClass({
     render: function() {
         return this.transferPropsTo(
             <a href="#" className="list-group-item">
+            	<div className='row'>
             	<span ref='messageWho' className="pull-left small">{this.props.who}</span>
-                <p ref='messageText' className="list-group-item-text">{this.props.messageText}</p>
-                <p ref='messageWhen' className="text-center small">{this.props.when}</p>
+                <p ref='messageText' className="col-xs-10 list-group-item-text">{this.props.messageText}</p>
+                <p ref='messageWhen' className="col-xs-10 text-center small">{this.props.when}</p>
+                </div>
             </a>
         );
     }
