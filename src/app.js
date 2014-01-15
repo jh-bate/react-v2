@@ -49,16 +49,12 @@ var ClamShellApp = React.createClass({
     componentDidMount: function () {
 
         //console.log('setup ...');
-
         if (this.state.authenticated) {
             //console.log('authenticated ...');
             this.fetchUserData();
             this.setState({routeName:'groups'});
         }
-        this.setupAndStartRouter();
-    },
-
-    setupAndStartRouter:function(){
+        //router
         var router = Router({
             '/': this.setState.bind(this, {routeName: 'login'}),
             '/groups': this.setState.bind(this, {routeName: 'groups'}),
@@ -80,10 +76,10 @@ var ClamShellApp = React.createClass({
 
     handleLogout:function(){
         //console.log('logging out ...');
+        var self = this;
         app.auth.logout(function(){
-            this.setState({authenticated: false,groups:null,messages:null, user:null,loggingOut:true,routeName:'login'});
-            //console.log('successful logout');
-        }.bind(this));
+            self.setState({authenticated: false,groups:null,messages:null, user:null,loggingOut:true,routeName:'login'});
+        });
     },
 
     handleBack:function(){
@@ -147,7 +143,6 @@ var ClamShellApp = React.createClass({
                 console.log('getting user groups and hacking messages');
                 self.setState({groups: groups, messages:groups[0].messages});
             });
-
         });
     }
 

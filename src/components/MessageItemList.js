@@ -5,12 +5,11 @@ var MessageItem = require('./MessageItem');
 
 var MessageItemList = React.createClass({
 
-	renderItems: function(){
-
-		var items = this.props.messages.map(function(message, i) {
+    render: function() {
+        var items = this.props.messages.map(function(message, i) {
 
             return (
-            	/* jshint ignore:start */
+                /* jshint ignore:start */
                 <MessageItem
                     key={message.id} 
                     who={message.name}
@@ -18,13 +17,7 @@ var MessageItemList = React.createClass({
                     when={message.timestamp}/>
                 /* jshint ignore:end */    
             );
-        }.bind(this));
-
-        return items;
-	},
-
-    render: function() {
-        var items = this.renderItems();
+        });
 
         return (
         	/* jshint ignore:start */

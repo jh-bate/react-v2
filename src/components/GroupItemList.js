@@ -33,14 +33,14 @@ var GroupItemList = React.createClass({
 		return time;
 	},
 
-	renderItems: function(){
+    render: function() {
 
-		var items = this.props.groups.map(function(group, i) {
+        var items = this.props.groups.map(function(group, i) {
 
-			var mostRecentMessage = this.mostRecentMessage(group.messages);		
+            var mostRecentMessage = this.mostRecentMessage(group.messages);     
 
             return (
-            	/* jshint ignore:start */
+                /* jshint ignore:start */
                 <GroupItem
                     onClick={this.props.onGroupSelected.bind(this.props, i)}
                     key={group.groupid} 
@@ -50,12 +50,6 @@ var GroupItemList = React.createClass({
                 /* jshint ignore:end */    
             );
         }.bind(this));
-
-        return items;
-	},
-
-    render: function() {
-        var items = this.renderItems();
 
         return (
         	/* jshint ignore:start */
