@@ -119,7 +119,7 @@ var ClamShellApp = React.createClass({
             return (
                 <Layout>
                     //<NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>
-                    <ListNavBar title='Teams' actionName='Signout' onActionHandled={this.handleLogout}/>
+                    <ListNavBar title='Teams' actionIcon='glyphicon glyphicon-log-out' onActionHandled={this.handleLogout}/>
                     <GroupItemList groups={this.state.groups} onGroupSelected={this.handleShowThread} />
                     <FooterBar actionName='New Message' onActionHandled={this.handleAddingMessage}/>
                 </Layout>
@@ -129,7 +129,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:start */
             return (
                 <Layout>
-                    <ListNavBar title='All Notes' actionName='Back' onActionHandled={this.handleBack}/>
+                    <ListNavBar title='All Notes' actionIcon='glyphicon glyphicon-arrow-left' onActionHandled={this.handleBack}/>
                     <MessageItemList messages={this.state.messages} />
                 </Layout>
             );
@@ -138,7 +138,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:start */
             return (
                 <Layout>
-                    <ListNavBar title='New Message' actionName='Back' onActionHandled={this.handleBack}/>
+                    <ListNavBar title='New Message' actionIcon='glyphicon glyphicon-arrow-left' onActionHandled={this.handleBack}/>
                     <MessageForm groups={this.state.groups} onMessageSend={this.handleSend}/>
                 </Layout>
             );
