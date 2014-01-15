@@ -37,6 +37,11 @@ require('./ClamShellApp.css');
 
 var ClamShellApp = React.createClass({
     getInitialState: function () {
+        return this.initializeAppState();
+    },
+
+    //starting state for the app when first used or after logout
+    initializeAppState : function(){
         return {
             messages: null,
             routeName: 'login',
@@ -49,9 +54,9 @@ var ClamShellApp = React.createClass({
 
     componentDidMount: function () {
 
-        //console.log('setup ...');
+        console.log('setup ...');
         if (this.state.authenticated) {
-            //console.log('authenticated ...');
+            console.log('authenticated ...');
             this.fetchUserData();
             this.setState({routeName:'groups'});
         }
@@ -65,22 +70,14 @@ var ClamShellApp = React.createClass({
         router.init();
     },
 
-    render: function () {
-        
-        var content = this.renderContent();
-
-        return (
-            <div className="app">
-                {content}
-            </div>
-        );
-    },
+    //---------- App Handlers ----------
 
     handleLogout:function(){
         //console.log('logging out ...');
         var self = this;
         app.auth.logout(function(){
-            self.setState({authenticated: false,groups:null,messages:null, user:null,loggingOut:true,routeName:'login'});
+            self.setState(self.initializeAppState());
+            //self.setState({authenticated: false,groups:null,messages:null, user:null,loggingOut:true,routeName:'login'});
         });
     },
 
@@ -111,53 +108,84 @@ var ClamShellApp = React.createClass({
         console.log('send ['+e.text+'] ['+e.group+']');
     },
 
+    //---------- Rendering Layouts ----------
+
+    render: function () {
+        console.log('rendering ...')
+        var content = this.renderContent();
+
+        return (
+            <div className="app">
+                {content}
+            </div>
+        );
+    },
+
+    renderGroupsLayout:function(){
+        return (
+            /* jshint ignore:start */
+            <Layout>
+                //<NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>
+                <ListNavBar title='Teams' actionIcon='glyphicon glyphicon-log-out' onActionHandled={this.handleLogout}/>
+                <GroupItemList groups={this.state.groups} onGroupSelected={this.handleShowThread} />
+                <FooterBar actionName='New Message' onActionHandled={this.handleAddingMessage}/>
+            </Layout>
+            /* jshint ignore:end */
+        );
+    },
+    renderThreadLayout:function(){
+        return (
+            /* jshint ignore:start */
+            <Layout>
+                <ListNavBar title='All Notes' actionIcon='glyphicon glyphicon-arrow-left' onActionHandled={this.handleBack}/>
+                <MessageItemList messages={this.state.messages} />
+            </Layout>
+            /* jshint ignore:end */
+        );
+    },
+    renderNewMessageLayout:function(){
+        return (
+            /* jshint ignore:start */
+            <Layout>
+                <ListNavBar title='New Message' actionIcon='glyphicon glyphicon-arrow-left' onActionHandled={this.handleBack}/>
+                <MessageForm groups={this.state.groups} onMessageSend={this.handleSend}/>
+            </Layout>
+            /* jshint ignore:end */
+        );
+    },
+    renderLoginLayout:function(){
+        return (  
+            /* jshint ignore:start */    
+            <Layout>
+                <Login onLoginSuccess={this.handleLoginSuccess} login={app.auth.login.bind(app.auth)}/>
+            </Layout>
+            /* jshint ignore:end */    
+        );
+    },
     renderContent:function(){
         var routeName = this.state.routeName;
 
         if (this.state.authenticated && routeName === 'groups') {
-            /* jshint ignore:start */
-            return (
-                <Layout>
-                    //<NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>
-                    <ListNavBar title='Teams' actionIcon='glyphicon glyphicon-log-out' onActionHandled={this.handleLogout}/>
-                    <GroupItemList groups={this.state.groups} onGroupSelected={this.handleShowThread} />
-                    <FooterBar actionName='New Message' onActionHandled={this.handleAddingMessage}/>
-                </Layout>
-            );
-            /* jshint ignore:end */
-        }else if(this.state.authenticated && routeName === 'thread'){
-            /* jshint ignore:start */
-            return (
-                <Layout>
-                    <ListNavBar title='All Notes' actionIcon='glyphicon glyphicon-arrow-left' onActionHandled={this.handleBack}/>
-                    <MessageItemList messages={this.state.messages} />
-                </Layout>
-            );
-            /* jshint ignore:end */
-        }else if(this.state.authenticated && routeName === 'new'){
-            /* jshint ignore:start */
-            return (
-                <Layout>
-                    <ListNavBar title='New Message' actionIcon='glyphicon glyphicon-arrow-left' onActionHandled={this.handleBack}/>
-                    <MessageForm groups={this.state.groups} onMessageSend={this.handleSend}/>
-                </Layout>
-            );
-            /* jshint ignore:end */
+            
+            return this.renderGroupsLayout();
+        }
+        else if(this.state.authenticated && routeName === 'thread'){
+            
+            return this.renderThreadLayout();
+        }
+        else if(this.state.authenticated && routeName === 'new'){
+
+            return this.renderNewMessageLayout();
         }
         else{
-            /* jshint ignore:start */
-            return (  
-                <Layout>
-                    <Login onLoginSuccess={this.handleLoginSuccess} login={app.auth.login.bind(app.auth)}/>
-                </Layout>
-            );
-            /* jshint ignore:end */
+            
+            return this.renderLoginLayout();
         }
     },
 
     fetchUserData: function() {
         var self = this;
-        //console.log('getting user');
+        console.log('getting user');
         app.api.user.get(function(err, user) {
             self.setState({user: user});
 
