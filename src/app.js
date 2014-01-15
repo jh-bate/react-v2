@@ -48,10 +48,10 @@ var ClamShellApp = React.createClass({
 
     componentDidMount: function () {
 
-        console.log('setup ...');
+        //console.log('setup ...');
 
         if (this.state.authenticated) {
-            console.log('authenticated ...');
+            //console.log('authenticated ...');
             this.fetchUserData();
             this.setState({routeName:'groups'});
         }
@@ -79,28 +79,28 @@ var ClamShellApp = React.createClass({
     },
 
     handleLogout:function(){
-        console.log('logging out ...');
+        //console.log('logging out ...');
         app.auth.logout(function(){
             this.setState({authenticated: false,groups:null,messages:null, user:null,loggingOut:true,routeName:'login'});
-            console.log('successful logout');
+            //console.log('successful logout');
         }.bind(this));
     },
 
     handleBack:function(){
-        console.log('going back ...');
+        //console.log('going back ...');
         this.setState({routeName:'groups'});
     },
 
     handleLoginSuccess:function(){
-        console.log('successful login');
+        //console.log('successful login');
         this.setState({authenticated: true});
         this.fetchUserData();
         this.setState({routeName:'groups'});
     },
 
     handleShowThread:function(groupId){
-        console.log('selected: ',groupId);
-        console.log('messages for selected: ',this.state.groups[groupId].messages);        
+        //console.log('selected: ',groupId);
+        //console.log('messages for selected: ',this.state.groups[groupId].messages);        
         this.setState({messages: this.state.groups[groupId].messages,routeName:'thread'});
     },
 
@@ -139,7 +139,7 @@ var ClamShellApp = React.createClass({
 
     fetchUserData: function() {
         var self = this;
-        console.log('getting user');
+        //console.log('getting user');
         app.api.user.get(function(err, user) {
             self.setState({user: user});
 
@@ -181,7 +181,7 @@ app.init = function(callback) {
     }
 
     function initAuth() {
-        console.log('authenticating ...');
+        //console.log('authenticating ...');
         self.auth.init(callback);
         callback();
     }
