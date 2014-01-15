@@ -16,6 +16,7 @@ var Layout = require('./layout/Layout');
 
 var NavBar = require('./components/NavBar');
 var ListNavBar = require('./components/ListNavBar');
+var FooterBar = require('./components/FooterBar');
 
 var Login = require('./components/Login');
 var GroupItemList = require('./components/GroupItemList');
@@ -100,6 +101,10 @@ var ClamShellApp = React.createClass({
         this.setState({messages: this.state.groups[groupId].messages,routeName:'thread'});
     },
 
+    handleAddingMessage:function(){
+        console.log('would like to add a new message');
+    },
+
     renderContent:function(){
         var routeName = this.state.routeName;
 
@@ -110,6 +115,7 @@ var ClamShellApp = React.createClass({
                     //<NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>
                     <ListNavBar title='Teams' actionName='Signout' onActionHandled={this.handleLogout}/>
                     <GroupItemList groups={this.state.groups} onGroupSelected={this.handleShowThread} />
+                    <FooterBar actionName='New Message' onActionHandled={this.handleAddingMessage}/>
                 </Layout>
             );
             /* jshint ignore:end */
