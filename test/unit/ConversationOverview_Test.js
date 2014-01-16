@@ -2,18 +2,18 @@ var chai = require('chai');
 var expect = chai.expect;
 var React = require('react');
 
-var GroupItem = require('../../build/components/GroupItem');
+var ConversationOverview = require('../../build/components/ConversationOverview');
 
 var testGroupName = 'My Test Group';
-var testLatestNoteSummary = 'A summary of the latest note to my care group';
+var testLatestNoteSummary = 'A summary of the latest note to my care group conversation thread';
 var testWhenTheLatestNoteOccured = 'Dec 24';
 
-describe('GroupItem', function() {
+describe('ConversationOverview', function() {
     var component, container;
 
     beforeEach(function() {
         //we add our component to test into a div and then render it
-        component = GroupItem({
+        component = ConversationOverview({
             name : testGroupName,
             latestNoteSummary : testLatestNoteSummary,
             when : testWhenTheLatestNoteOccured

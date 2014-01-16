@@ -14,10 +14,10 @@ var bows = require('bows');
 
 var Layout = require('./layout/Layout');
 
-var NavBar = require('./components/NavBar');
 var ListNavBar = require('./components/ListNavBar');
 var FooterBar = require('./components/FooterBar');
 var Login = require('./components/Login');
+
 var GroupConversations = require('./components/GroupConversations');
 var MessageItemList = require('./components/MessageItemList');
 var MessageForm = require('./components/MessageForm');

@@ -2,7 +2,7 @@
 var React = require('react');
 var _ = require('underscore');
 
-var GroupItem = require('./GroupItem');
+var ConversationOverview = require('./ConversationOverview');
 
 var GroupConversations = React.createClass({
 
@@ -41,7 +41,7 @@ var GroupConversations = React.createClass({
 
             return (
                 /* jshint ignore:start */
-                <GroupItem
+                <ConversationOverview
                     onClick={this.props.onGroupSelected.bind(this.props, i)}
                     key={group.groupid} 
                     name={group.name}

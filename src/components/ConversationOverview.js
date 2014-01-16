@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react');
 
-var GroupItem = React.createClass({
+var ConversationOverview = React.createClass({
     render: function() {
         return this.transferPropsTo(
             <a href="#" className="list-group-item">
@@ -17,5 +17,5 @@ var GroupItem = React.createClass({
     }
 });
 
-module.exports = GroupItem;
+module.exports = ConversationOverview;
 
