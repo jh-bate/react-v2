@@ -4,7 +4,7 @@ var _ = require('underscore');
 
 var GroupItem = require('./GroupItem');
 
-var GroupItemList = React.createClass({
+var GroupConversations = React.createClass({
 
 	summaryForMessage: function(messageText){
 		//return the first 10 words or less
@@ -61,5 +61,5 @@ var GroupItemList = React.createClass({
     }
 });
 
-module.exports = GroupItemList;
+module.exports = GroupConversations;
 

@@ -2,7 +2,7 @@ var chai = require('chai');
 var expect = chai.expect;
 var React = require('react');
 
-var GroupItemList = require('../../build/components/GroupItemList');
+var GroupConversations = require('../../build/components/GroupConversations');
 var groups = require('../../demo/data').groups;
 
 var handlerCalled = false;
@@ -13,12 +13,12 @@ var handleGroupSelected = function(props, key){
     handlerCalled = true;
 };
 
-describe('GroupItemList', function() {
+describe('GroupConversations', function() {
     var component, container;
 
     beforeEach(function() {
         //we add our component to test into a div and then render it
-        component = GroupItemList({groups:groups,onGroupSelected:handleGroupSelected});
+        component = GroupConversations({groups:groups,onGroupSelected:handleGroupSelected});
 
         container = document.createElement('div');
         document.documentElement.appendChild(container);

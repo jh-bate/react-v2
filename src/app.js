@@ -18,7 +18,7 @@ var NavBar = require('./components/NavBar');
 var ListNavBar = require('./components/ListNavBar');
 var FooterBar = require('./components/FooterBar');
 var Login = require('./components/Login');
-var GroupItemList = require('./components/GroupItemList');
+var GroupConversations = require('./components/GroupConversations');
 var MessageItemList = require('./components/MessageItemList');
 var MessageForm = require('./components/MessageForm');
 
@@ -73,34 +73,27 @@ var ClamShellApp = React.createClass({
     //---------- App Handlers ----------
 
     handleLogout:function(){
-        //console.log('logging out ...');
         var self = this;
         app.auth.logout(function(){
             self.setState(self.initializeAppState());
-            //self.setState({authenticated: false,groups:null,messages:null, user:null,loggingOut:true,routeName:'login'});
         });
     },
 
     handleBack:function(){
-        //console.log('going back ...');
         this.setState({routeName:'groupConversations'});
     },
 
     handleLoginSuccess:function(){
-        //console.log('successful login');
         this.setState({authenticated: true});
         this.fetchUserData();
         this.setState({routeName:'groupConversations'});
     },
 
-    handleShowConversationThread:function(groupId){
-        //console.log('selected: ',groupId);
-        //console.log('messages for selected: ',this.state.groups[groupId].messages);        
+    handleShowConversationThread:function(groupId){    
         this.setState({messages: this.state.groups[groupId].messages,routeName:'conversationThread'});
     },
 
     handleStartingNewConversation:function(){
-        console.log('would like to add a new message');
         this.setState({routeName:'newConversation'});
     },
 
@@ -134,7 +127,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:start */
             <Layout>
                 <ListNavBar title='Conversations' actionIcon='glyphicon glyphicon-log-out' onActionHandled={this.handleLogout}/>
-                <GroupItemList groups={this.state.groups} onGroupSelected={this.handleShowConversationThread} />
+                <GroupConversations groups={this.state.groups} onGroupSelected={this.handleShowConversationThread} />
                 <FooterBar actionName='New Conversation' onActionHandled={this.handleStartingNewConversation}/>
             </Layout>
             /* jshint ignore:end */
