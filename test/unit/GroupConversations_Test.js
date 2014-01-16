@@ -31,7 +31,7 @@ describe('GroupConversations', function() {
         document.documentElement.removeChild(container);
     });
 
-    it('should have method to get most recent message based on timestamp', function() {
+   /* it('should have method to get most recent message based on timestamp', function() {
         expect(component.mostRecentMessage).to.exist;
     });
 
@@ -39,7 +39,7 @@ describe('GroupConversations', function() {
         var mostRecent = component.mostRecentMessage(groups[0].messages);
         console.log(mostRecent.timestamp);
         expect(mostRecent.id).to.equal('070159bf-bd33-4998-b874-6b9c2bafe7fb');
-    });
+    });*/
 
     it('should have method to get a summary of the content of the most recent message', function() {
         expect(component.summaryForMessage).to.exist;
@@ -70,6 +70,15 @@ describe('GroupConversations', function() {
         //call the onClick of first groupitem that is a child of our component
         component._renderedComponent.props.children[0].props.onClick();
         expect(handlerCalled).to.be.true;
+    });
+
+    //conversationsForGroup
+
+    it('should give the most recent message for each conversation in the group', function() {
+        //call the onClick of first groupitem that is a child of our component
+        var group = groups[0];
+        var converstions = component.conversationsForGroup(group);
+        expect(converstions.length).to.equal(2);
     });
 
 });

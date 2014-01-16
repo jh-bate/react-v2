@@ -33,23 +33,52 @@ var GroupConversations = React.createClass({
 		return time;
 	},
 
-    render: function() {
+    conversationsForGroup:function(group){
 
-        var items = this.props.groups.map(function(group, i) {
+        var latestForConversation = [];
 
-            var mostRecentMessage = this.mostRecentMessage(group.messages);     
+
+        console.log('in: ',group.messages);
+
+        var convsersations = _.groupBy(group.messages, 'rootmessageid');
+
+        _.each(convsersations, function(conversationMessages){
+
+            //these aren't the root messages
+            if(conversationMessages[0].rootmessageid){
+
+                var latest =  _.sortBy(conversationMessages, function (message) {
+                    return message.timestamp;
+                }).reverse();
+
+                latestForConversation.push(latest[0]); 
+            }
+        });
+
+
+
+        var items = latestForConversation.map(function(message, i) {
 
             return (
                 /* jshint ignore:start */
                 <ConversationOverview
                     onClick={this.props.onGroupSelected.bind(this.props, i)}
-                    key={group.groupid} 
+                    key={message.rootmessageid} 
                     name={group.name}
-                    latestNoteSummary={this.summaryForMessage(mostRecentMessage.messagetext)}
-                    when={this.niceTime(mostRecentMessage.timestamp)}/>
+                    latestNoteSummary={this.summaryForMessage(message.messagetext)}
+                    when={this.niceTime(message.timestamp)}/>
                 /* jshint ignore:end */    
             );
         }.bind(this));
+
+        console.log('out: ',items);
+
+        return items;
+    },
+
+    render: function() {
+
+        var items = this.conversationsForGroup(this.props.groups[0]); 
 
         return (
         	/* jshint ignore:start */
