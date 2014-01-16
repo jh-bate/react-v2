@@ -58,14 +58,14 @@ var ClamShellApp = React.createClass({
         if (this.state.authenticated) {
             console.log('authenticated ...');
             this.fetchUserData();
-            this.setState({routeName:'groups'});
+            this.setState({routeName:'groupConversations'});
         }
         //router
         var router = Router({
             '/': this.setState.bind(this, {routeName: 'login'}),
-            '/groups': this.setState.bind(this, {routeName: 'groups'}),
-            '/thread': this.setState.bind(this, {routeName: 'thread'}),
-            '/new': this.setState.bind(this, {routeName: 'new'})
+            '/groupConversations': this.setState.bind(this, {routeName: 'groupConversations'}),
+            '/conversationThread': this.setState.bind(this, {routeName: 'conversationThread'}),
+            '/newConversation': this.setState.bind(this, {routeName: 'newConversation'})
         });
         router.init();
     },
@@ -83,29 +83,37 @@ var ClamShellApp = React.createClass({
 
     handleBack:function(){
         //console.log('going back ...');
-        this.setState({routeName:'groups'});
+        this.setState({routeName:'groupConversations'});
     },
 
     handleLoginSuccess:function(){
         //console.log('successful login');
         this.setState({authenticated: true});
         this.fetchUserData();
-        this.setState({routeName:'groups'});
+        this.setState({routeName:'groupConversations'});
     },
 
-    handleShowThread:function(groupId){
+    handleShowConversationThread:function(groupId){
         //console.log('selected: ',groupId);
         //console.log('messages for selected: ',this.state.groups[groupId].messages);        
-        this.setState({messages: this.state.groups[groupId].messages,routeName:'thread'});
+        this.setState({messages: this.state.groups[groupId].messages,routeName:'conversationThread'});
     },
 
-    handleAddingMessage:function(){
+    handleStartingNewConversation:function(){
         console.log('would like to add a new message');
-        this.setState({routeName:'new'});
+        this.setState({routeName:'newConversation'});
     },
 
-    handleSend:function(e){
+    handleStartConversation:function(e){
+        //optimistically add to the existing messages
         console.log('send ['+e.text+'] ['+e.group+']');
+
+        var updatedMessages = this.state.messages;
+
+        this.setState({messages:updatedMessages});
+        //show the thread
+        console.log('show updated thread');
+        this.handleShowConversationThread(e.group);
     },
 
     //---------- Rendering Layouts ----------
@@ -121,19 +129,18 @@ var ClamShellApp = React.createClass({
         );
     },
 
-    renderGroupsLayout:function(){
+    renderGroupConversationsLayout:function(){
         return (
             /* jshint ignore:start */
             <Layout>
-                //<NavBar onLogoutSuccess={this.handleLogoutSuccess} logout={app.auth.logout.bind(app.auth)}/>
-                <ListNavBar title='Teams' actionIcon='glyphicon glyphicon-log-out' onActionHandled={this.handleLogout}/>
-                <GroupItemList groups={this.state.groups} onGroupSelected={this.handleShowThread} />
-                <FooterBar actionName='New Message' onActionHandled={this.handleAddingMessage}/>
+                <ListNavBar title='Conversations' actionIcon='glyphicon glyphicon-log-out' onActionHandled={this.handleLogout}/>
+                <GroupItemList groups={this.state.groups} onGroupSelected={this.handleShowConversationThread} />
+                <FooterBar actionName='New Conversation' onActionHandled={this.handleStartingNewConversation}/>
             </Layout>
             /* jshint ignore:end */
         );
     },
-    renderThreadLayout:function(){
+    renderConversationThreadLayout:function(){
         return (
             /* jshint ignore:start */
             <Layout>
@@ -143,12 +150,12 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:end */
         );
     },
-    renderNewMessageLayout:function(){
+    renderNewConversationLayout:function(){
         return (
             /* jshint ignore:start */
             <Layout>
-                <ListNavBar title='New Message' actionIcon='glyphicon glyphicon-arrow-left' onActionHandled={this.handleBack}/>
-                <MessageForm groups={this.state.groups} onMessageSend={this.handleSend}/>
+                <ListNavBar title='New Conversation' actionIcon='glyphicon glyphicon-arrow-left' onActionHandled={this.handleBack}/>
+                <MessageForm groups={this.state.groups} onMessageSend={this.handleStartConversation}/>
             </Layout>
             /* jshint ignore:end */
         );
@@ -165,17 +172,17 @@ var ClamShellApp = React.createClass({
     renderContent:function(){
         var routeName = this.state.routeName;
 
-        if (this.state.authenticated && routeName === 'groups') {
+        if (this.state.authenticated && routeName === 'groupConversations') {
             
-            return this.renderGroupsLayout();
+            return this.renderGroupConversationsLayout();
         }
-        else if(this.state.authenticated && routeName === 'thread'){
+        else if(this.state.authenticated && routeName === 'conversationThread'){
             
-            return this.renderThreadLayout();
+            return this.renderConversationThreadLayout();
         }
-        else if(this.state.authenticated && routeName === 'new'){
+        else if(this.state.authenticated && routeName === 'newConversation'){
 
-            return this.renderNewMessageLayout();
+            return this.renderNewConversationLayout();
         }
         else{
             
