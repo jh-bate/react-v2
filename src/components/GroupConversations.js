@@ -44,12 +44,16 @@ var GroupConversations = React.createClass({
 
         _.each(convsersations, function(conversationMessages){
 
+            console.log('conversations: ',conversationMessages);
+
             //these aren't the root messages
             if(conversationMessages[0].rootmessageid){
 
                 var latest =  _.sortBy(conversationMessages, function (message) {
                     return message.timestamp;
                 }).reverse();
+
+                console.log('latest: ',latest[0]);
 
                 latestForConversation.push(latest[0]); 
             }
