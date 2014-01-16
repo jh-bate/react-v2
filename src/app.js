@@ -105,14 +105,13 @@ var ClamShellApp = React.createClass({
 
         this.setState({messages:updatedMessages});
         //show the thread
-        console.log('show updated thread');
+        console.log('show new conversation thread');
         this.handleShowConversationThread(e.group);
     },
 
     //---------- Rendering Layouts ----------
 
     render: function () {
-        console.log('rendering ...')
         var content = this.renderContent();
 
         return (
