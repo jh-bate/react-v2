@@ -17,6 +17,7 @@ var Layout = require('./layout/Layout');
 
 var ListNavBar = require('./components/ListNavBar');
 var FooterBar = require('./components/FooterBar');
+var MessageFooter = require('./components/MessageFooter');
 var Login = require('./components/Login');
 
 var GroupConversations = require('./components/GroupConversations');
@@ -147,7 +148,7 @@ var ClamShellApp = React.createClass({
             <Layout>
                 <ListNavBar title='Conversations' actionIcon='glyphicon glyphicon-log-out' onActionHandled={this.handleLogout}/>
                 <GroupConversations groups={this.state.groups} onThreadSelected={this.handleShowConversationThread} />
-                <FooterBar actionName='New Conversation' onActionHandled={this.handleStartingNewConversation}/>
+                <MessageFooter messagePrompt='Add a new note' btnMessage='Post'/>
             </Layout>
             /* jshint ignore:end */
         );
@@ -159,6 +160,7 @@ var ClamShellApp = React.createClass({
             <Layout>
                 <ListNavBar title='All Notes' actionIcon='glyphicon glyphicon-arrow-left' onActionHandled={this.handleBack}/>
                 <MessageItemList messages={this.state.messages} />
+                <MessageFooter messagePrompt='Add a comment' btnMessage='Post'/>
             </Layout>
             /* jshint ignore:end */
         );
