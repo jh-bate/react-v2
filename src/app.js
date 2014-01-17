@@ -11,6 +11,7 @@
 var React = require('react');
 var Router = require('director').Router;
 var bows = require('bows');
+var _ = require('underscore');
 
 var Layout = require('./layout/Layout');
 
@@ -70,6 +71,25 @@ var ClamShellApp = React.createClass({
         router.init();
     },
 
+    // ---------- Utility Methods ----------
+    messagesForThread:function(groupId,rootMessageId){
+
+        var messageGroup = _.find(this.state.groups, function(group){ return groupId == group.id });
+
+        console.log('group: ',messageGroup);
+
+        var messagesInThread = _.where(messageGroup.messages, {rootmessageid: rootMessageId});
+
+        console.log('messages: ',messagesInThread);
+
+        var messagesOrderedByDate = _.sortBy(messagesInThread, function(message){ return message.timestamp });
+
+        console.log('ordered: ',messagesOrderedByDate);
+
+        return messagesOrderedByDate;
+
+    },
+
     //---------- App Handlers ----------
 
     handleLogout:function(){
@@ -89,8 +109,14 @@ var ClamShellApp = React.createClass({
         this.setState({routeName:'groupConversations'});
     },
 
-    handleShowConversationThread:function(groupId){    
-        this.setState({messages: this.state.groups[groupId].messages,routeName:'conversationThread'});
+    handleShowConversationThread:function(mostRecentMessageInThread){    
+
+        console.log('group: ',mostRecentMessageInThread.groupid);
+        console.log('root message: ',mostRecentMessageInThread.rootmessageid);
+
+        var messages = this.messagesForThread(mostRecentMessageInThread.groupid,mostRecentMessageInThread.rootmessageid);
+
+        this.setState({messages: messages,routeName:'conversationThread'});
     },
 
     handleStartingNewConversation:function(){
@@ -126,12 +152,13 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:start */
             <Layout>
                 <ListNavBar title='Conversations' actionIcon='glyphicon glyphicon-log-out' onActionHandled={this.handleLogout}/>
-                <GroupConversations groups={this.state.groups} onGroupSelected={this.handleShowConversationThread} />
+                <GroupConversations groups={this.state.groups} onThreadSelected={this.handleShowConversationThread} />
                 <FooterBar actionName='New Conversation' onActionHandled={this.handleStartingNewConversation}/>
             </Layout>
             /* jshint ignore:end */
         );
     },
+
     renderConversationThreadLayout:function(){
         return (
             /* jshint ignore:start */
@@ -142,6 +169,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:end */
         );
     },
+
     renderNewConversationLayout:function(){
         return (
             /* jshint ignore:start */
@@ -152,6 +180,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:end */
         );
     },
+
     renderLoginLayout:function(){
         return (  
             /* jshint ignore:start */    
@@ -161,6 +190,7 @@ var ClamShellApp = React.createClass({
             /* jshint ignore:end */    
         );
     },
+
     renderContent:function(){
         var routeName = this.state.routeName;
 
