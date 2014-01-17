@@ -76,15 +76,9 @@ var ClamShellApp = React.createClass({
 
         var messageGroup = _.find(this.state.groups, function(group){ return groupId == group.id });
 
-        console.log('group: ',messageGroup);
-
         var messagesInThread = _.where(messageGroup.messages, {rootmessageid: rootMessageId});
 
-        console.log('messages: ',messagesInThread);
-
         var messagesOrderedByDate = _.sortBy(messagesInThread, function(message){ return message.timestamp });
-
-        console.log('ordered: ',messagesOrderedByDate);
 
         return messagesOrderedByDate;
 
