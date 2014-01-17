@@ -7,7 +7,7 @@ var groups = require('../../demo/data').groups;
 
 var handlerCalled = false;
 
-var handleGroupSelected = function(props, key){
+var handleThreadSelected = function(props, key){
     console.log('props: ',props);
     console.log('key: ',key);
     handlerCalled = true;
@@ -18,7 +18,7 @@ describe('GroupConversations', function() {
 
     beforeEach(function() {
         //we add our component to test into a div and then render it
-        component = GroupConversations({groups:groups,onGroupSelected:handleGroupSelected});
+        component = GroupConversations({groups:groups,onThreadSelected:handleThreadSelected});
 
         container = document.createElement('div');
         document.documentElement.appendChild(container);
