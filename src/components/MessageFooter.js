@@ -7,7 +7,7 @@ var MessageFooter = React.createClass({
 
     handleSubmit: function() {
         var messageText = this.refs.messageText.getDOMNode().value.trim();
-        this.props.onMessageSend({text: messageText});
+        this.props.onAddMessageToThread({text: messageText});
         this.refs.messageText.getDOMNode().value = '';
     },
 
