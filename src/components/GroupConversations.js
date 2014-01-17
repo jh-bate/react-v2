@@ -6,8 +6,8 @@ var ConversationOverview = require('./ConversationOverview');
 
 var GroupConversations = React.createClass({
 
-	summaryForMessage: function(messageText){
-		//return the first 10 words or less
+    summaryForMessage: function(messageText){
+        //return the first 10 words or less
         var summary = messageText;
 
         if(messageText && messageText.split(' ').length > 10){
@@ -16,52 +16,29 @@ var GroupConversations = React.createClass({
             summary += ' ...';
         }
         return summary;
-	},
+    },
 
-	mostRecentMessage: function(messages){
-		if(messages){
-			var latest =  _.sortBy(messages, function (message) {
-				return message.timestamp;
-			}).reverse();
-
-			return latest[0];
-		}
-		return;
-	},
-
-	niceTime: function(time){
-		return time;
-	},
+    niceTime: function(time){
+        return time;
+    },
 
     conversationsForGroup:function(group){
 
-        var latestForConversation = [];
-
-
-        console.log('in: ',group.messages);
+        var mostRecentForConversation = [];
 
         var convsersations = _.groupBy(group.messages, 'rootmessageid');
 
         _.each(convsersations, function(conversationMessages){
 
-            console.log('conversations: ',conversationMessages);
+            var latest =  _.sortBy(conversationMessages, function (message) {
+                return message.timestamp;
+            });
 
-            //these aren't the root messages
-            if(conversationMessages[0].rootmessageid){
-
-                var latest =  _.sortBy(conversationMessages, function (message) {
-                    return message.timestamp;
-                }).reverse();
-
-                console.log('latest: ',latest[0]);
-
-                latestForConversation.push(latest[0]); 
-            }
+            mostRecentForConversation.push(latest[0]); 
+            
         });
 
-
-
-        var items = latestForConversation.map(function(message, i) {
+        var items = mostRecentForConversation.map(function(message, i) {
 
             return (
                 /* jshint ignore:start */
@@ -75,8 +52,6 @@ var GroupConversations = React.createClass({
             );
         }.bind(this));
 
-        console.log('out: ',items);
-
         return items;
     },
 
@@ -85,7 +60,7 @@ var GroupConversations = React.createClass({
         var items = this.conversationsForGroup(this.props.groups[0]); 
 
         return (
-        	/* jshint ignore:start */
+            /* jshint ignore:start */
             <div className="list-group">
                 {items}
             </div>

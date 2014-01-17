@@ -31,16 +31,6 @@ describe('GroupConversations', function() {
         document.documentElement.removeChild(container);
     });
 
-   /* it('should have method to get most recent message based on timestamp', function() {
-        expect(component.mostRecentMessage).to.exist;
-    });
-
-    it('should give me the newest message in the list of passed messages', function() {
-        var mostRecent = component.mostRecentMessage(groups[0].messages);
-        console.log(mostRecent.timestamp);
-        expect(mostRecent.id).to.equal('070159bf-bd33-4998-b874-6b9c2bafe7fb');
-    });*/
-
     it('should have method to get a summary of the content of the most recent message', function() {
         expect(component.summaryForMessage).to.exist;
     });
@@ -72,13 +62,21 @@ describe('GroupConversations', function() {
         expect(handlerCalled).to.be.true;
     });
 
-    //conversationsForGroup
-
-    it('should give the most recent message for each conversation in the group', function() {
+    it('should return two converstaion threads', function() {
         //call the onClick of first groupitem that is a child of our component
         var group = groups[0];
         var converstions = component.conversationsForGroup(group);
         expect(converstions.length).to.equal(2);
+    });
+
+    it('should have two converstaion overviews where the key is the id for the root message of each thread', function() {
+        //call the onClick of first groupitem that is a child of our component
+        var group = groups[0];
+        var converstions = component.conversationsForGroup(group);
+
+        expect(converstions[0].props.key).to.equal('9233c2ae-7bad-41f5-9295-e73f0437295b');
+        expect(converstions[1].props.key).to.equal('070159bf-bd33-4998-b874-6b9c2bafe7fb');
+        
     });
 
 });
