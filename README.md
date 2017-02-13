@@ -71,7 +71,7 @@ Third-party dependencies are managed npm and are installed when you do the insta
 
 Requirements:
 
-- [Mocha](http://visionmedia.github.io/mocha/) 
+- [Mocha](http://mochajs.org/) 
 - [Chai](http://chaijs.com/)
 - [Browserify](http://browserify.org/)
 - [Testem](https://github.com/airportyh/testem) as the test runner.
